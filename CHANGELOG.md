@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-22 10:19:32 - arm_layout
+- **Branch:** `main`
+- **Commit Message:** "Updated design"
+- **Files Updated:**
+  - `hardware\cad\arm_layout.f3d`
+  - `hardware\cad\arm_layout.step`
+  - `hardware\cad\arm_layout.stl`
+
+---
+
 All notable changes to this project are recorded here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
