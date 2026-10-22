@@ -1,0 +1,32 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.pytest_cache/
+
+# PlatformIO / Arduino
+.pio/
+.pioenvs/
+.piolibdeps/
+build/
+
+# CAD backups and slicer output
+*.f3z.bak
+*.gcode
+hardware/build/
+
+# Local config and secrets (WiFi credentials etc.)
+secrets.h
+config.local.*
