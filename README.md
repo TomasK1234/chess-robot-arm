@@ -116,16 +116,18 @@ chess-robot-arm/
 ├── firmware/           ESP8266 firmware (not started)
 │   └── src/
 ├── software/           Vision, game logic and move planner (not started)
-├── CHANGELOG.md
+├── CHANGELOG.md        Automatic log of CAD exports, written by the Fusion-to-GitHub add-in
 ├── LICENSE
 └── README.md
 ```
 
 ## Documentation
 
+- [Arm design plan](docs/arm-design-plan.md): the staged plan for the mechanical design, with the check that ends each stage
 - [Design notes](docs/design-notes.md): layout parameters, reach maths, loads, bearings, vertical stack, open questions
 - [Bill of materials](docs/bill-of-materials.md): parts, sources and status
 - [Build log](docs/build-log.md): what was done and decided, in order
+- [Changelog](docs/CHANGELOG.md): notable project changes, written by hand
 - [Hardware](hardware/README.md), [Firmware](firmware/README.md), [Software](software/README.md)
 
 ## License
