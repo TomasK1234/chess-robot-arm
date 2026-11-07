@@ -6,7 +6,7 @@ The staged plan for the mechanical design. Each stage ends with a check that mus
 
 - **One master design.** `arm_layout` holds the user parameters, so every printed part becomes a component inside it, driven by those parameters. The servo and bearing models are inserted as linked reference components. The work in `base_mount` gets folded into the pedestal component. One document means one set of parameters and one place to check clearances.
 - **Design from the gripper back to the base.** Each stage carries everything after it. The gripper and Z axis set the height of link 2, which sets link 1, which sets the pedestal height. That is why the pedestal is paused until the gripper and Z axis exist, even though work on it had started.
-- **Shared baseboard.** The arm and the chess board mount on one baseboard (plywood or MDF). The arm cannot tip over (with roughly 330 g reaching about 300 mm out, a free-standing base would need about 1 kg of ballast). The board also stays registered to the arm, so square calibration and camera calibration survive being bumped.
+- **Shared baseboard.** The arm and the chess board mount on one laser-cut baseboard (6 mm plywood, MDF or acrylic, about 500 x 500 mm). The pedestal bolts to it, and an engraved outline or locating strips put the board in the same place every time. The arm cannot tip over (with roughly 330 g reaching about 300 mm out, a free-standing base would need about 1 kg of ballast). The board also stays registered to the arm, so square calibration and camera calibration survive being bumped. Check the laser cutter's bed size; the baseboard can be split in two with a joining plate if needed.
 - **Test the riskiest part first.** Before printing the whole arm, print one joint (bearing, servo and hub) and bench-test it with the servo driver.
 
 ## Stage 0: buy the reference parts (now)
@@ -22,11 +22,13 @@ Hole spacing, horn shape, shaft splines and bearing hole patterns aren't in the 
 
 Measure with calipers: servo body length (without tabs), tab-to-tab length, mounting hole spacing and diameter, the height from the tab face to the shaft top, the horn hole pattern, and the shaft offset from the body centre. On the bearing: the hole positions on both plates, and how much it tilts under a light hand load. For each piece type: total height, neck height, the smallest neck diameter, and the widest part above the neck.
 
-## Stage 1: upgrade the master layout
+## Stage 1: upgrade the master layout (done 2026-10-30)
 
-- Add parameters for the piece dimensions, the vertical stack heights, the bearing size and the gripper envelope.
-- Put construction axes at the shoulder, elbow and wrist, and add work planes at each link height.
-- **Check:** changing `board_size` still rebuilds everything.
+- Added parameters for the piece dimensions (EST), the gripper envelope, the bearing, the vertical stack, the link print length, the shoulder keep-out and the baseboard. See section 5 of the [design notes](design-notes.md#5-vertical-stack-second-pass-parametric).
+- Added work planes at each level (`plane_lift`, `plane_shoulder_plate_top`, `plane_link1_bottom`, `plane_link1_top`, `plane_link2_bottom`), and a `baseboard` sketch with the shoulder keep-out circle.
+- `pedestal_height` is now derived from the stack, so the shoulder servo reference moved up to 95.7 mm.
+- Joint axes at the elbow and wrist are deferred to Stage 7, when the link components exist.
+- **Check passed:** with `board_size` at 400 mm and `king_height` at 85 mm, every level, the baseboard and the servo position updated, and the timeline stayed healthy. Values restored to 350 mm and 76 mm afterwards. At 400 mm, `link_overall_length` becomes 344 mm, too long for the Mark 2, which shows the length check is worth keeping.
 
 ## Stage 2: gripper
 
@@ -43,10 +45,10 @@ Measure with calipers: servo body length (without tabs), tab-to-tab length, moun
 
 ## Stage 4: forearm (link 2) and elbow
 
-- **How the links are made depends on your printer bed.** Each link is about 231 mm between axes, plus the hubs, so roughly 300 mm overall. That is longer than most printer beds. Options:
-  1. Printed hubs joined by aluminium square tube cut to length. Stiff and light, and the length stays a single parameter.
-  2. A fully printed link split into two parts and bolted at the middle.
-  3. A fully printed link printed diagonally, if the bed allows.
+- **Link manufacture (lab printers).** Each link is about 231 mm between axes. Allowing about 40 mm beyond each axis to bolt to the bearing plates, a link is about 311 mm long overall.
+  - Prototype links: PLA or PETG on the Ultimaker S5 (330 x 240 x 300 mm build volume). Fast, cheap and easy to reprint.
+  - Final links: Onyx with continuous carbon fibre on the Markforged Mark 2 (320 x 132 x 154 mm). Much stiffer and lighter at the same size. A 311 mm link only just fits, so keep the overall length to 315 mm or less, or bolt on separate end hubs.
+  - Design implication: continuous fibre is laid in flat layers, so the links should be plate-like parts printed lying flat, with the fibre running along the length. Vertical features such as the servo pocket go on the hubs.
 - **Elbow:** the servo mounts on the end of link 1 with its shaft up. Link 2 rides on the second bearing. The servo horn drives link 2 through a coupling with slight radial float, so the servo shaft and the bearing don't fight over the axis.
 - **Check:** link 2 and the Z carriage clear link 1 and the shoulder hub at the full 160° fold.
 
@@ -59,7 +61,7 @@ Measure with calipers: servo body length (without tabs), tab-to-tab length, moun
 
 - The pedestal height now follows from the stack. The shoulder servo hangs under the top plate.
 - On the board side, the structure stays within about 54 mm of the shoulder axis, so the gripper can reach the nearest squares.
-- An electronics bay in the base holds the ESP8266, the PCA9685, the buck converter, the barrel jack and the capacitor. Plan cable routes up the arm with slack loops at each joint.
+- An electronics bay in the base holds the ESP8266, the PCA9685, the barrel jack and the capacitor. Plan cable routes up the arm with slack loops at each joint.
 - **Check:** fasteners can be reached with tools, and wires don't snag across the full joint ranges.
 
 ## Stage 7: motion check in CAD

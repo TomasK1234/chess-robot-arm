@@ -19,8 +19,8 @@ Firmware for the ESP8266 that receives commands over WiFi and drives the servos 
 |---|---|
 | I2C (SDA, SCL) | ESP8266 to the PCA9685 |
 | Servo PWM | PCA9685 channels, one per servo |
-| Servo power | Separate 6 V supply, with a common ground shared with the logic side |
-| Logic power | Buck converter from the same supply |
+| Servo power | 5 V 6 A supply into the Featherwing's servo terminal, with a 1000 µF capacitor across it |
+| Logic power | Same 5 V supply into the Feather's USB pin, wired directly from the supply input |
 
 ## Planned tooling
 

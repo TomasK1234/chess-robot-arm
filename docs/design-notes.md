@@ -83,21 +83,32 @@ Dynamic torque for a 90° sweep in about 1.5 s comes out near 1.5 kg·cm with a 
 
 Expect some play. The bearings are pressed steel with small gaps in the ball track. Because the arm always leans the same way, the bearing settles into a steady tilt that calibration can absorb. If the arm is still too sloppy at full reach, the upgrade path is a thicker bearing with a larger ball track, or two bearings stacked apart.
 
-## 5. Vertical stack (first pass)
+## 5. Vertical stack (second pass, parametric)
 
-Assumes a set with a king of about 76 mm, which usually pairs with squares of about 44 mm.
+The stack is now built from the top down in `arm_layout` parameters. Values marked EST are estimates until the chess set, servos and bearings are measured. Changing any of them updates every level below.
 
-| Level | Height above board | Why |
-|---|---|---|
-| Tallest piece (king) | 76 mm | Sets everything else |
-| Lift needed to carry a piece | about 80 mm | The carried piece's base must clear the king |
-| Link 2 (underside) | about 155 mm | Lifted piece's neck at about 120 mm plus about 35 mm of gripper hardware |
-| Link 1 (top surface) | about 125 mm | Link 2 sits about 30 mm above it, on the elbow servo and horn |
-| Shoulder servo (base) | about 70 mm | Servo is about 45 mm tall; link 1 attaches to its horn |
+| Level | Parameter | Expression | Value |
+|---|---|---|---|
+| Carried piece base | `lift_height` | `king_height + carry_clearance` | 81 mm |
+| Underside of link 2 | `link2_bottom` | `lift_height + grip_height_max + gripper_stack + z_clearance` | 171 mm |
+| Top of link 1 | `link1_top` | `link2_bottom - bearing_thickness` | 163.1 mm |
+| Underside of link 1 | `link1_bottom` | `link1_top - link_thickness` | 155.1 mm |
+| Top of pedestal plate | `shoulder_plate_top` | `link1_bottom - bearing_thickness` | 147.2 mm |
+| Shoulder servo body base | `pedestal_height` | `shoulder_plate_top - top_plate_thickness - mtr7_height` | 95.7 mm |
 
-The shoulder servo hangs under a top plate, with its shaft passing up through the plate and the bearing's centre hole. That plate ends up roughly 110 mm above the board, held on posts around the servo. All of these numbers will move once the gripper and Z mechanism are designed.
+Inputs (EST): `grip_height_min` 20 mm (pawn neck), `grip_height_max` 50 mm (king neck), `gripper_stack` 35 mm (grip point to top of gripper carriage), `link_thickness` 8 mm, `top_plate_thickness` 6 mm.
 
-The Z axis is planned as a servo-driven crank and slide with about 80 mm of travel, which keeps it on the same PCA9685 as the other joints.
+Each piece is gripped at its own neck height, from a calibration table. The Z axis therefore has to travel from gripping a pawn at the board up to carrying a king: `z_travel = lift_height + grip_height_max - grip_height_min`, about **111 mm**. That is more than the 80 mm in the first pass, which assumed one grip height for every piece. A rack and pinion on a 180° servo needs a pinion pitch radius of about 35 mm for that travel.
+
+The Z guide rods are planned to be fixed to the gripper carriage and slide through bushings in the wrist hub. When lifted, they stick up above link 2, so nothing fixed hangs below link 2 except the gripper.
+
+Checks built into the parameters:
+
+- `elbow_servo_clearance = link1_bottom - mtr7_height - king_height`, currently 33.6 mm. If the elbow servo hangs under link 1, it clears a standing king.
+- `link_overall_length = link1_length + 2 * link_end_margin`, currently 310.9 mm. It must stay within `print_max_length` (315 mm, Markforged Mark 2).
+- `shoulder_keepout_radius = bearing_size / 2 * sqrt(2)`, currently 53.9 mm. The bearing's corner sweep; structure on the board side stays inside it.
+
+The laser-cut baseboard is `baseboard_width` x `baseboard_depth`, currently 490 x 548 mm, and is drawn in the `baseboard` sketch.
 
 ## 6. Alternatives considered
 

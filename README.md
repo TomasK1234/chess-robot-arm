@@ -42,7 +42,7 @@ flowchart LR
 | End effector | Parallel gripper, gripping the neck of standard Staunton pieces | Works with a real set. A magnet was rejected because standard piece tops are not uniform or flat. |
 | Servo driver | Adafruit PCA9685 Featherwing | Generates 16 channels of PWM in hardware, so the microcontroller is not tied up with timing. An FPGA would be overkill for four servos. |
 | Joint bearings | 3 inch square lazy-susan bearings at shoulder and elbow | Hobby servo shafts should not carry bending loads. The bearing carries the weight and the servo only rotates it. |
-| Power | One 6 V supply for the servos, a buck converter for the logic rail | Isolates the logic supply from servo current spikes. |
+| Power | One 5 V 6 A supply for the servos and the logic, with a 1000 µF capacitor on the servo rail | Cheapest single-supply option; both servo types are rated from 4.8 V and the bearings carry the arm's weight. |
 | Comms | WiFi from PC to ESP8266 | Only a power cable reaches the arm. |
 | Vision | Occupancy diff, not piece classification | Far simpler and more robust. |
 | CAD | Parametric Fusion 360, every dimension derived from `board_size` | A different board only means changing one number. |

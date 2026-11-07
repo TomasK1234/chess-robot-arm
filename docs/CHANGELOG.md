@@ -14,6 +14,11 @@ All notable changes to this project are recorded here. The format follows [Keep 
 
 ## [Unreleased]
 
+### Changed
+
+- Power plan: one 5 V 6 A supply for servos and logic replaces the 6 V supply and logic buck converter
+- Bill of materials updated with ordered parts, prices, chosen chess set (40 mm squares) and deferred items
+
 ### Added
 
 - Project scope, goals and architecture overview in the README

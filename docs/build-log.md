@@ -2,6 +2,15 @@
 
 Newest entries first. Each entry records what was done and what was decided, with the reason.
 
+## November 2026
+
+### First parts order
+
+- Ordered the Puecrof 15 inch folding chess set (40 mm squares, 3 inch king). The playing area becomes 320 mm, which keeps each link at about 291 mm overall, inside the Mark 2's 315 mm limit. A 45 mm-square board would have pushed the links past it.
+- Ordered three MTR7 servos, two MTR11 servos (one spare for the gripper), two 3 inch lazy-susan bearings, a 1000 µF capacitor and a 2.1 mm DC socket.
+- **Changed the power plan to a single 5 V 6 A supply** for both servos and logic. The planned 6 V 5 A supply cost £17.53 plus £24 delivery, a spare 12 V router adapter turned out to use a proprietary plug, and a 12 V supply plus a high-current buck cost about twice as much. Both servo types are rated from 4.8 V; the roughly 10 to 15 % torque loss is acceptable because the bearings carry the arm's weight. A 12 V supply with an XL4015 buck at 6 V is the fallback if the Z axis needs more torque.
+- Deferred the Feather HUZZAH ESP8266, servo extension leads (lengths depend on cable routing), webcam, Z guides and grease. Dropped spare MTR7 and bearing.
+
 ## October 2026
 
 ### Layout, reach analysis and bearings
