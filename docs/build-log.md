@@ -4,6 +4,12 @@ Newest entries first. Each entry records what was done and what was decided, wit
 
 ## November 2026
 
+### Chess set measured, layout updated
+
+- Measured the Puecrof set: 40.125 mm squares (321 mm playing area), 29 mm border (378 mm overall), 24 mm thick, 77 mm king. Neck heights run from 19 mm (pawn) to 42 mm (king); neck and head diameters are in the [design notes](design-notes.md#measured-chess-set-puecrof-november). The knight was re-measured straight across with a ruler (head 25 × 10 mm, neck 11 × 9 mm), because the paper-wrap method only works for round pieces.
+- Updated `arm_layout`: `board_size` 350 → 321 mm, `king_height` 77 mm, grip heights 19 to 42 mm. Set `head_clear_dia` to 25 mm: with no wrist servo the jaw direction swings about 126° across the board, so the gripper must clear the knight's long side; a 29 mm jaw gap still leaves about 6 mm to the nearest neighbour. Links drop to 211.8 mm between axes (291.8 mm overall), Z travel to 105 mm and the underside of link 2 to 164 mm. The timeline rebuilds without errors.
+- Added `board_border` and `board_thickness`. The baseboard now includes the border, which previously would have overhung the far edge by 9 mm. New check `board_edge_clearance`: the wooden board edge is only 24.5 mm in front of the shoulder axis, so the pedestal has to fit inside that.
+
 ### First parts order
 
 - Ordered the Puecrof 15 inch folding chess set (40 mm squares, 3 inch king). The playing area becomes 320 mm, which keeps each link at about 291 mm overall, inside the Mark 2's 315 mm limit. A 45 mm-square board would have pushed the links past it.

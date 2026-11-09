@@ -16,6 +16,8 @@ All notable changes to this project are recorded here. The format follows [Keep 
 
 ### Changed
 
+- Layout resized to the measured chess set: 321 mm playing area, 77 mm king, measured grip heights (links 211.8 mm between axes)
+- Baseboard size now includes the 29 mm board border
 - Power plan: one 5 V 6 A supply for servos and logic replaces the 6 V supply and logic buck converter
 - Bill of materials updated with ordered parts, prices, chosen chess set (40 mm squares) and deferred items
 

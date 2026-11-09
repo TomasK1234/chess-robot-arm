@@ -9,7 +9,7 @@ A desk-sized SCARA robot arm that plays physical chess against a person. An over
 
 ## Goals
 
-- Play a full game against a person on a real 350 mm board with standard Staunton pieces
+- Play a full game against a person on a real board (321 mm playing area) with standard Staunton pieces
 - Reach every square, including the squares closest to the arm's own base
 - Run only a power cable to the arm; send commands over WiFi
 - Stay documented and reproducible: parametric CAD, a bill of materials, and written design rationale
@@ -53,14 +53,14 @@ The reasoning and numbers behind each choice are in [docs/design-notes.md](docs/
 
 | Parameter | Value |
 |---|---|
-| Board | 350 mm, 43.75 mm squares |
-| Base setback from board edge | 58.3 mm |
-| Link lengths (L1 = L2) | 230.9 mm |
-| Farthest square from shoulder | 415.7 mm (90% of full extension) |
-| Nearest square from shoulder | about 80 mm |
+| Board | 321 mm playing area, 40.125 mm squares (378 mm including border) |
+| Base setback from playing area | 53.5 mm |
+| Link lengths (L1 = L2) | 211.8 mm |
+| Farthest square from shoulder | 381.2 mm (90% of full extension) |
+| Nearest square from shoulder | about 76 mm |
 | Shoulder travel needed | about 4° to 130° |
 | Elbow bend needed | about 52° (far corner) to 160° (nearest squares) |
-| Carry lift | about 80 mm, to clear a 76 mm king |
+| Carry lift | 82 mm, to clear a 77 mm king |
 
 These come from the layout sketch and are estimates until the arm is built and measured.
 
@@ -92,7 +92,7 @@ The arm skeleton was drawn in CAD with both link lengths locked and dragged to t
 
 - [x] Choose project and scope
 - [x] Select servos and bearings
-- [x] Work out link lengths and reach for a 350 mm board
+- [x] Work out link lengths and reach for the board (first 350 mm, now the measured 321 mm playing area)
 - [ ] Model the shoulder pedestal and bearing mount
 - [ ] Model links, elbow joint, Z mechanism and gripper
 - [ ] Order parts, measure real servo and bearing dimensions, update the CAD parameters

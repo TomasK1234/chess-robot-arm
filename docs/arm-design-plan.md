@@ -18,7 +18,7 @@ Hole spacing, horn shape, shaft splines and bearing hole patterns aren't in the 
 | MTR7 servo (MG995 class) | 3 + 1 spare | Mounts, horns and body size for the shoulder, elbow and Z axis. Clones vary, so keep a spare. |
 | MTR11 mini servo (SG90 class) | 1 + 1 spare | Gripper drive |
 | 3 inch lazy-susan bearing | 3 | Hole pattern, plate thickness and actual play |
-| 350 mm board and Staunton set | 1 | King height, neck heights and diameters drive the gripper and the whole vertical stack |
+| Puecrof board and Staunton set (measured November, see design notes) | 1 | King height, neck heights and diameters drive the gripper and the whole vertical stack. Knight measured with a ruler |
 
 Measure with calipers: servo body length (without tabs), tab-to-tab length, mounting hole spacing and diameter, the height from the tab face to the shaft top, the horn hole pattern, and the shaft offset from the body centre. On the bearing: the hole positions on both plates, and how much it tilts under a light hand load. For each piece type: total height, neck height, the smallest neck diameter, and the widest part above the neck.
 
@@ -33,7 +33,7 @@ Measure with calipers: servo body length (without tabs), tab-to-tab length, moun
 ## Stage 2: gripper
 
 - **Concept:** a parallel gripper. The MTR11 turns a centre pinion that drives two opposed racks, so both jaws move together and stay centred on the piece. V-notched jaw pads self-centre on round necks.
-- **Requirements:** the opening clears the widest piece head with margin. The open jaws fit between neighbouring pieces at grip height (squares are 43.75 mm). The grip lands on the neck of every piece type, including the knight.
+- **Requirements:** the opening clears the widest piece head with margin. The open jaws fit between neighbouring pieces at grip height (squares are 40.125 mm; jaws open to at least 29 mm (knight head 25 mm in any orientation) and close to 8 mm or less). The grip lands on the neck of every piece type, including the knight.
 - **Check:** in CAD, the open jaws clear the neighbouring pieces on a full board. Then print and test on real pieces.
 
 ## Stage 3: Z axis
