@@ -4,6 +4,14 @@ Newest entries first. Each entry records what was done and what was decided, wit
 
 ## November 2026
 
+### Design review and baseboard height
+
+- Reviewed the whole design before starting the gripper. The reach maths, the gripper clearance arithmetic and the power budget all checked out.
+- **Moved the baseboard below the playing surface.** `board_thickness` had been measured but not used, so the baseboard was drawn at the same height as the squares. It is now on a new plane, `plane_baseboard_top`, 24 mm lower. The new parameter `pedestal_height_above_baseboard = pedestal_height + board_thickness` = 112.7 mm is the height the pedestal really has to be. Tested by setting `board_thickness` to 30 mm: the plane and sketch followed and the timeline stayed healthy. Restored to 24 mm afterwards.
+- **Corrected the servo resolution estimate.** The notes assumed 1000 to 2000 µs covers 180°. Servos of this class usually need about 500 to 2500 µs for that, which doubles the number of steps: about 0.44° per step (about 3 mm at full reach), not 0.88°. To be confirmed on the real servos.
+- Fixed stale numbers in the design plan and bill of materials (links 211.8 mm between axes and 291.8 mm overall, baseboard 519 x 544 mm, order quantities), and moved a CAD export entry from the hand-written changelog to the add-in's log.
+- **Still open from the review:** the real landing accuracy is unknown until a servo is bench-tested (the gripper sizing assumes ±2 mm); the gripper has to be slim or long-fingered to reach a pawn beside a king; whether to use only the elbow-side capture strip; a series diode so the 5 V supply cannot back-feed a PC over USB; and the camera mount (lens about 450 to 650 mm above the board).
+
 ### Chess set measured, layout updated
 
 - Measured the Puecrof set: 40.125 mm squares (321 mm playing area), 29 mm border (378 mm overall), 24 mm thick, 77 mm king. Neck heights run from 19 mm (pawn) to 42 mm (king); neck and head diameters are in the [design notes](design-notes.md#measured-chess-set-puecrof-november). The knight was re-measured straight across with a ruler (head 25 × 10 mm, neck 11 × 9 mm), because the paper-wrap method only works for round pieces.

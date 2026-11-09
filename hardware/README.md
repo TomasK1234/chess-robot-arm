@@ -4,7 +4,7 @@ Mechanical design for the arm, modelled in Autodesk Fusion 360.
 
 ## Status
 
-The CAD currently lives in a Fusion project, not in this repository. Exported models will be committed to [`cad/`](cad/) at each milestone (a STEP file for exchange and an F3D archive for editing). Printable STL files will be added once the design is fixed and the real parts have been measured.
+The master CAD lives in a Fusion project. The Fusion-to-GitHub add-in exports `arm_layout` to [`cad/`](cad/) as F3D, STEP and STL each time the design is pushed. Printable STL files for the individual parts will be added once the design is fixed and the real parts have been measured.
 
 ## Fusion files
 
@@ -21,7 +21,7 @@ The CAD currently lives in a Fusion project, not in this repository. Exported mo
 - **Units are millimetres.**
 - **Every dimension is a named parameter.** Layout parameters derive from `board_size` (see the table in [design notes](../docs/design-notes.md#1-layout-parameters)). Servo dimensions are parameters too, named `mtr7_*` and `mtr11_*`, so measuring the real parts only means editing a few values.
 - **Components have descriptive names**, not `Component1`.
-- **The shoulder axis is the origin** of `arm_layout`, with the board in front of it.
+- **The shoulder axis is the origin** of `arm_layout`, with the board in front of it. Heights are measured from the playing surface (z = 0); the baseboard top is `board_thickness` (24 mm) below it.
 
 ## Servo parameters
 

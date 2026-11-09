@@ -23,7 +23,7 @@ Prices are approximate UK prices including VAT, checked October to November 2026
 | PTFE grease | 1 | Bearings and guides | Optional | £7.49 | Deferred |
 | 3D-printed parts (PLA or PETG) | n/a | Prototype links, pedestal, gripper | Lab Ultimaker S5 | filament | Planned |
 | Fibre-reinforced links (Onyx + continuous carbon fibre) | 2 | Final links 1 and 2 | Lab Markforged Mark 2 (320 mm max length) | lab material | Planned |
-| Laser-cut baseboard, 6 mm plywood, MDF or acrylic, about 500 x 500 mm | 1 | Holds the arm and locates the chess board | Lab laser cutter | sheet stock | Planned |
+| Laser-cut baseboard, 6 mm plywood, MDF or acrylic, about 519 x 544 mm | 1 | Holds the arm and locates the chess board | Lab laser cutter | sheet stock | Planned |
 
 ## Notes
 
@@ -31,4 +31,4 @@ Prices are approximate UK prices including VAT, checked October to November 2026
 - **Servo clones.** Several marketplace listings sold as SG92R quoted SG90-class torque (1.3 to 1.8 kg·cm). Check the torque figure on any listing before buying, and prefer retailers that publish specifications.
 - **Power.** The servos run at 5 V from one 5 V 6 A supply, which also feeds the Feather's USB pin. Both servo types are rated from 4.8 V, so this costs roughly 10 to 15 % torque and speed compared with 6 V, which the SCARA layout can afford because the bearings carry the arm's weight. Take the Feather's feed directly from the supply input rather than from the servo wiring, and keep the 1000 µF capacitor across the servo terminals. If testing shows the Z axis needs more torque, a 12 V supply with an XL4015 buck set to 6 V is the fallback.
 - **Rejected power options.** The RobotShop 6 V 5 A supply cost £17.53 plus £24 delivery. The spare Sagemcom 12 V 3 A router adapter uses a proprietary keyed plug rather than a standard barrel.
-- **Board size.** The Puecrof set has 40 mm squares, so `board_size` becomes 320 mm once a square is measured. That gives a link overall length of about 291 mm, inside the Mark 2's 315 mm limit.
+- **Board size.** The Puecrof squares measure 40.125 mm, so `board_size` is 321 mm. That gives a link overall length of 291.8 mm, inside the Mark 2's 315 mm limit.

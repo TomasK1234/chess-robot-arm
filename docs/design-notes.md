@@ -18,11 +18,11 @@ The layout lives in one CAD file (`arm_layout`) where every dimension derives fr
 | `king_height` | 77 mm (measured) | 77 mm |
 | `lift_height` | `king_height + carry_clearance` | 82 mm |
 | `board_border` | 29 mm (measured) | 29 mm |
-| `board_thickness` | 24 mm (measured, not yet used) | 24 mm |
+| `board_thickness` | 24 mm (measured, board unfolded) | 24 mm |
 
-The origin of the layout sketch is the shoulder axis. The playing area is centred left-to-right on it, with its near edge `base_setback` in front of it. All heights are measured from the playing surface (z = 0); the baseboard is currently drawn on the same plane, so `board_thickness` still has to be added when the pedestal is designed.
+The origin of the layout sketch is the shoulder axis. The playing area is centred left-to-right on it, with its near edge `base_setback` in front of it. All heights are measured from the playing surface (z = 0). The baseboard sits under the chess board, so its top face is drawn on `plane_baseboard_top`, `board_thickness` (24 mm) below the playing surface.
 
-The physical board is 378 mm square (321 mm + 2 × 29 mm border), so its near edge is only `board_edge_clearance = base_setback - board_border` = **24.5 mm** in front of the shoulder axis. The front of the pedestal has to stay inside that.
+The physical board is 378 mm square (321 mm + 2 × 29 mm border), so its near edge is only `board_edge_clearance = base_setback - board_border` = **24.5 mm** in front of the shoulder axis. Below the playing surface (the bottom 24 mm of the pedestal, beside the wooden board) the front of the pedestal has to stay inside that. Higher up it can overhang the border, as long as it stays inside the shoulder keep-out (section 5).
 
 ### Measured chess set (Puecrof, November)
 
@@ -86,8 +86,8 @@ Both areas of desk need to stay clear.
 
 ## 3. Precision
 
-- **Resolution.** The PCA9685 is 12-bit over a 20 ms period, about 4.9 µs per step. Over a 1000 to 2000 µs servo range that is roughly 205 steps across 180°, or **about 0.88° per step**. At 381 mm reach that is about 6 mm at the gripper.
-- **Backlash.** Metal-gear hobby servos typically have 0.5 to 1° of slop (not yet measured on these units). That is another 4 to 7 mm at full reach.
+- **Resolution.** The PCA9685 is 12-bit over a 20 ms period, about 4.9 µs per step. Servos of this class typically turn only about 90° over 1000 to 2000 µs and need roughly 500 to 2500 µs for the full 180° (to be confirmed on the real units). That is about 410 steps across 180°, or **about 0.44° per step**: about 3 mm at the gripper at 381 mm reach for the shoulder, and about 1.6 mm for the elbow acting over link 2 (211.8 mm).
+- **Backlash.** Metal-gear hobby servos typically have 0.5 to 1° of slop (not yet measured on these units). That is another 3 to 7 mm at full reach.
 - **Tolerance.** Squares are 40.1 mm wide, so the gripper has roughly ±16 mm of tolerance to land in the square. Clearance to neighbouring pieces (about 11 mm between king bases) is the tighter limit.
 
 Mitigations:
@@ -107,7 +107,7 @@ Rough estimates, assuming about 330 g of servos, links, gripper and a held piece
 
 Dynamic torque for a 90° sweep in about 1.5 s comes out near 1.5 kg·cm with a safety factor, comfortably inside the rated torque of the metal-gear servos. The static moment, though, is a sideways load on a hobby servo's output shaft, which is not built for it. Each rotary joint therefore uses a bearing that carries the weight, with the servo only turning it.
 
-**Chosen: 3 inch square lazy-susan bearings** (76.2 mm square, 7.9 mm thick, 31.75 mm bore, 200 lb axial rating). The tipping load is small compared with the rating. The 4 inch size was rejected: its rotating plate sweeps about 72 mm in radius, which leaves no clearance for the gripper at the nearest squares (about 80 mm from the shoulder, with a gripper roughly 30 mm wide). The 3 inch plate sweeps about 54 mm.
+**Chosen: 3 inch square lazy-susan bearings** (76.2 mm square, 7.9 mm thick, 31.75 mm bore, 200 lb axial rating). The tipping load is small compared with the rating. The 4 inch size was rejected: its rotating plate sweeps about 72 mm in radius, which leaves no clearance for the gripper at the nearest squares (about 76 mm from the shoulder, with a gripper roughly 39 mm wide). The 3 inch plate sweeps about 54 mm.
 
 Expect some play. The bearings are pressed steel with small gaps in the ball track. Because the arm always leans the same way, the bearing settles into a steady tilt that calibration can absorb. If the arm is still too sloppy at full reach, the upgrade path is a thicker bearing with a larger ball track, or two bearings stacked apart.
 
@@ -135,9 +135,9 @@ Checks built into the parameters:
 - `elbow_servo_clearance = link1_bottom - mtr7_height - king_height`, currently 25.6 mm. If the elbow servo hangs under link 1, it clears a standing king.
 - `link_overall_length = link1_length + 2 * link_end_margin`, currently 291.8 mm. It must stay within `print_max_length` (315 mm, Markforged Mark 2).
 - `shoulder_keepout_radius = bearing_size / 2 * sqrt(2)`, currently 53.9 mm. The bearing's corner sweep; structure on the board side stays inside it.
-- `board_edge_clearance = base_setback - board_border`, currently 24.5 mm. Shoulder axis to the near edge of the wooden board; the pedestal front must stay inside it.
+- `board_edge_clearance = base_setback - board_border`, currently 24.5 mm. Shoulder axis to the near edge of the wooden board; the pedestal front must stay inside it below the playing surface (its bottom 24 mm).
 
-The laser-cut baseboard is `baseboard_width` x `baseboard_depth`, currently 519 x 543.5 mm, and is drawn in the `baseboard` sketch. Both now include `board_border`, so the whole wooden board and the capture strips beside it fit on the baseboard.
+The laser-cut baseboard is `baseboard_width` x `baseboard_depth`, currently 519 x 543.5 mm, and is drawn in the `baseboard` sketch. Both now include `board_border`, so the whole wooden board and the capture strips beside it fit on the baseboard. Its top face is `board_thickness` (24 mm) below the playing surface, on `plane_baseboard_top`. The pedestal stands on it, so the shoulder servo body base is `pedestal_height_above_baseboard = pedestal_height + board_thickness` = **112.7 mm** above the baseboard.
 
 ## 6. Alternatives considered
 
@@ -162,6 +162,6 @@ The laser-cut baseboard is `baseboard_width` x `baseboard_depth`, currently 519 
 - [x] Choose and buy the board and set together. King height drives the whole vertical stack.
 - [x] Re-measure the knight neck and head straight across with a ruler (neck 11 × 9 mm, head 25 × 10 mm).
 - [x] Confirm that the 24 mm board thickness is with the board unfolded (yes).
-- [ ] Check that the pedestal fits inside the 24.5 mm between the shoulder axis and the board edge, or increase `base_setback`.
+- [ ] Check that the bottom 24 mm of the pedestal fits inside the 24.5 mm between the shoulder axis and the board edge, or increase `base_setback`.
 - [ ] Decide the ESP8266 board and the power supply (see the [bill of materials](bill-of-materials.md)).
 - [ ] Confirm in the 3D model that link 2 clears link 1 and the shoulder structure at the roughly 160° elbow fold.
