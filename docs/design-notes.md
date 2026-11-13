@@ -163,5 +163,7 @@ The laser-cut baseboard is `baseboard_width` x `baseboard_depth`, currently 519 
 - [x] Re-measure the knight neck and head straight across with a ruler (neck 11 × 9 mm, head 25 × 10 mm).
 - [x] Confirm that the 24 mm board thickness is with the board unfolded (yes).
 - [ ] Check that the bottom 24 mm of the pedestal fits inside the 24.5 mm between the shoulder axis and the board edge, or increase `base_setback`.
-- [ ] Decide the ESP8266 board and the power supply (see the [bill of materials](bill-of-materials.md)).
+- [x] Decide the controller board and the power supply: Raspberry Pi Pico WH and one 5 V 6 A supply (see the [bill of materials](bill-of-materials.md)).
+- [ ] Confirm the Featherwing's I2C address with a scan (expected 0x45 from the bridged A0 and A2 jumpers), and check the positions of its 3V, GND, SDA and SCL pins against the silkscreen before wiring.
+- [ ] Bench-test one MTR7 for landing accuracy and pulse range (500 to 2500 µs expected). The gripper sizing assumes ±2 mm at the square. Any board that can output a servo pulse will do.
 - [ ] Confirm in the 3D model that link 2 clears link 1 and the shoulder structure at the roughly 160° elbow fold.

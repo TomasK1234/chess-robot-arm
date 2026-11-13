@@ -6,9 +6,12 @@ Prices are approximate UK prices including VAT, checked October to November 2026
 |---|---|---|---|---|---|
 | Metal-gear servo, 180°, "Servo and Linkage Kit" MTR7 (MG995 class) | 3 | Shoulder, elbow, Z | Bitsbox | £5.03 each | Ordered |
 | Mini servo and linkage kit MTR11 (SG90 class) | 2 | Gripper, plus one spare (plastic gears are the most likely to strip while tuning grip) | Bitsbox | £4.26 each | Ordered |
-| Adafruit PCA9685 16-channel servo Featherwing | 1 | Servo driver | Adafruit | n/a | Owned |
-| Adafruit Feather HUZZAH ESP8266 | 1 | WiFi and I2C controller; stacks directly on the Featherwing | The Pi Hut | £14.40 | Selected (order later) |
-| Feather stacking headers | 1 set | Stacking the Featherwing on the HUZZAH | The Pi Hut | £1.10 | Selected (order later) |
+| Adafruit PCA9685 8-channel PWM/servo Featherwing | 1 | Servo driver | Hand-me-down. Its headers are fitted on the top face, so it is wired with jumpers and cannot stack. Address jumpers A0 and A2 are bridged, so the expected I2C address is 0x45 (to confirm with a scan) | n/a | Owned |
+| Raspberry Pi Pico WH (Pico W with pre-soldered headers) | 1 | WiFi and I2C controller, running MicroPython | The Pi Hut or Rapid Electronics; a Pico 2 WH also works | about £6 to £7 | Selected (order later) |
+| Jumper wires, female-female and female-male | 1 pack each | Pico to Featherwing: 3.3 V, GND, SDA and SCL | Check lab stock first; The Pi Hut | £1.70 a pack | Selected (order later) |
+| 1 A diode (1N5817 Schottky preferred; a 1N4001 also works) | 1 | Between the servo rail and the Pico's VSYS pin | Check lab stock first; Bitsbox | £0.23 | Planned (lab stock) |
+| Micro-USB data cable | 1 | Programming the Pico | Must carry data, not charge only; The Pi Hut | £1.20 | Planned (if none to hand) |
+| Inline switch rated 6 A or more | 1 | Emergency stop on the servo supply | Optional; the wall socket switch does the job until then | to be decided | Deferred |
 | 5 V 6 A DC supply, 5.5 x 2.1 mm plug, centre positive | 1 | Single supply for the servos and the logic | Amazon UK | about £10 | Ordered |
 | 2.1 mm PCB DC socket (CN018) | 1 | Supply input | Bitsbox | £1.33 | Ordered |
 | 1000 µF 25 V electrolytic capacitor (LC1KU25) | 1 | Bulk smoothing across the servo terminals | Bitsbox | £0.47 | Ordered |
@@ -29,6 +32,6 @@ Prices are approximate UK prices including VAT, checked October to November 2026
 
 - **Servo dimensions.** Listings give body sizes only, not hole spacing or shaft diameter. The CAD uses placeholders until the real parts are measured. See [design notes](design-notes.md#7-open-questions).
 - **Servo clones.** Several marketplace listings sold as SG92R quoted SG90-class torque (1.3 to 1.8 kg·cm). Check the torque figure on any listing before buying, and prefer retailers that publish specifications.
-- **Power.** The servos run at 5 V from one 5 V 6 A supply, which also feeds the Feather's USB pin. Both servo types are rated from 4.8 V, so this costs roughly 10 to 15 % torque and speed compared with 6 V, which the SCARA layout can afford because the bearings carry the arm's weight. Take the Feather's feed directly from the supply input rather than from the servo wiring, and keep the 1000 µF capacitor across the servo terminals. If testing shows the Z axis needs more torque, a 12 V supply with an XL4015 buck set to 6 V is the fallback.
+- **Power.** The servos run at 5 V from one 5 V 6 A supply, which also powers the Pico. Both servo types are rated from 4.8 V, so this costs roughly 10 to 15 % torque and speed compared with 6 V, which the SCARA layout can afford because the bearings carry the arm's weight. The supply goes into the Featherwing's screw terminal, with the 1000 µF capacitor across it. The Pico's VSYS pin is fed from that terminal through a diode (a spare servo header's middle pin is the same rail). The diode stops USB power flowing into the servo rail when the supply is off; it drops about 0.3 V (Schottky) or 0.7 V (1N4001), and VSYS accepts 1.8 to 5.5 V. The Pico's 3V3(OUT) pin powers the Featherwing's logic. Never connect 5 V to a 3.3 V pin. If testing shows the Z axis needs more torque, a 12 V supply with an XL4015 buck set to 6 V is the fallback.
 - **Rejected power options.** The RobotShop 6 V 5 A supply cost £17.53 plus £24 delivery. The spare Sagemcom 12 V 3 A router adapter uses a proprietary keyed plug rather than a standard barrel.
 - **Board size.** The Puecrof squares measure 40.125 mm, so `board_size` is 321 mm. That gives a link overall length of 291.8 mm, inside the Mark 2's 315 mm limit.

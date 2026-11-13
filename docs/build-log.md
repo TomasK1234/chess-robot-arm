@@ -4,6 +4,16 @@ Newest entries first. Each entry records what was done and what was decided, wit
 
 ## November 2026
 
+### Controller changed to a Raspberry Pi Pico, power wiring planned
+
+- The servos (3 MTR7, 2 MTR11), the capacitor and the DC socket arrived. The socket fits the supply's plug. Nothing has been measured yet.
+- **The Featherwing cannot stack.** Photos showed that a previous owner fitted all its headers on the top face (a socket strip on the 12-pin side, pins on the 16-pin side), so nothing protrudes underneath. It is also the 8-channel board, not the 16-channel one the notes assumed. Its A0 and A2 address jumpers are bridged, which should make its I2C address 0x45.
+- **Changed the controller from the Feather HUZZAH ESP8266 to a Raspberry Pi Pico WH.** With no stacking, a Feather-shaped board has no advantage, and the Pico costs about half as much. It will run MicroPython, because servo positions can be typed in and tried immediately during calibration.
+- **Kept the Featherwing.** It distributes servo power, takes the servo plugs directly and produces steady pulses. Its step is 20 ms / 4096, about 4.9 µs (0.44°). Revisit only if a bench test shows the step size limits accuracy.
+- **Connection:** four jumper wires between the Pico and the Featherwing (3.3 V, GND, SDA, SCL).
+- **Power wiring.** The supply goes into the Featherwing's screw terminal, with the 1000 µF capacitor across it, and from there to the servos. The same terminal feeds the Pico's VSYS pin through a diode, and the Pico's 3V3(OUT) pin powers the Featherwing's logic. The Pico's own diode already stops the supply back-feeding a PC over USB; the added diode stops USB power flowing the other way into the servo rail when the supply is off. With only USB connected the servos are unpowered, which is the safe state for uploading code. This replaces the earlier plan of feeding the Feather's USB pin.
+- **Ordering deferred.** The Pico, the jumper wires and the remaining small parts will be ordered together once the design is ready to print, to avoid paying for delivery more than once.
+
 ### Design review and baseboard height
 
 - Reviewed the whole design before starting the gripper. The reach maths, the gripper clearance arithmetic and the power budget all checked out.

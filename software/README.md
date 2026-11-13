@@ -12,7 +12,7 @@ PC-side software: board vision, game logic, move planning and the link to the ar
 | Move detection | Compare occupancy before and after the human's turn to find the move. Special cases: castling, en passant, promotion |
 | Engine | Keep the game state and ask Stockfish for the robot's reply over UCI |
 | Planner | Turn a move into a sequence of arm actions, including captures and the capture area |
-| Comms | Send commands to the ESP8266 over WiFi and handle acknowledgements and errors |
+| Comms | Send commands to the Pico over WiFi and handle acknowledgements and errors |
 
 ## Planned tooling
 

@@ -11,6 +11,10 @@ All notable changes to this project are recorded here. The format follows [Keep 
 - Baseboard drawn 24 mm (`board_thickness`) below the playing surface, on the new plane `plane_baseboard_top`; new parameter `pedestal_height_above_baseboard` (112.7 mm)
 - Power plan: one 5 V 6 A supply for servos and logic replaces the 6 V supply and logic buck converter
 - Bill of materials updated with ordered parts, prices, chosen chess set (40 mm squares) and deferred items
+- Controller changed from the Feather HUZZAH ESP8266 to a Raspberry Pi Pico WH running MicroPython
+- Servo driver corrected to the 8-channel Featherwing, wired by four jumper wires rather than stacked (expected I2C address 0x45)
+- Logic power now comes from the servo rail through a diode into the Pico's VSYS pin, replacing the feed into the Feather's USB pin
+- Bill of materials: stacking headers removed; jumper wires, diode, micro-USB data cable and optional supply switch added
 
 ### Added
 

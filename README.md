@@ -3,7 +3,7 @@
 ![Status: design phase](https://img.shields.io/badge/status-design%20phase-orange)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 
-A desk-sized SCARA robot arm that plays physical chess against a person. An overhead camera watches the board, Stockfish chooses a reply, and the arm picks up and moves the piece. The arm is driven by an ESP8266 and a 16-channel PWM servo driver, with a single power cable running to it.
+A desk-sized SCARA robot arm that plays physical chess against a person. An overhead camera watches the board, Stockfish chooses a reply, and the arm picks up and moves the piece. The arm is driven by a Raspberry Pi Pico W and an 8-channel PWM servo driver, with a single power cable running to it.
 
 > **Status: design phase.** The arm geometry is worked out and the CAD layout is parametric. Parts are being selected and the mechanical design is under way. Nothing has been built or flashed yet. See [Project status](#project-status).
 
@@ -22,8 +22,8 @@ flowchart LR
     CAM["USB webcam<br/>overhead view"] --> VIS["Vision<br/>homography + occupancy diff"]
     VIS --> ENG["Game logic<br/>Stockfish via UCI"]
     ENG --> PLAN["Move planner<br/>calibration table / IK"]
-    PLAN -- WiFi --> MCU["ESP8266"]
-    MCU -- I2C --> PWM["PCA9685<br/>16-ch servo driver"]
+    PLAN -- WiFi --> MCU["Raspberry Pi<br/>Pico W"]
+    MCU -- I2C --> PWM["PCA9685<br/>8-ch servo driver"]
     PWM --> ARM["SCARA arm<br/>shoulder, elbow, Z, gripper"]
     ARM -. moves pieces .-> BOARD["Chess board"]
     BOARD -. watched by .-> CAM
@@ -32,7 +32,7 @@ flowchart LR
 1. **Vision.** A fixed overhead webcam is calibrated to the board with a homography. After each human move, per-square occupancy is compared with the previous state: the move is the square that emptied and the one that filled. No piece recognition is needed. Castling, en passant and promotion are handled as special cases.
 2. **Game logic.** [Stockfish](https://stockfishchess.org/) runs on the PC over the UCI protocol and returns the robot's reply.
 3. **Motion.** Every square, the capture area and a home position are calibrated once as servo angles. Moves run as interpolated sequences: hover, lower, grip, lift, travel, lower, release, lift, home.
-4. **Actuation.** The ESP8266 receives commands over WiFi and drives the PCA9685 servo driver over I2C.
+4. **Actuation.** The Pico receives commands over WiFi and drives the PCA9685 servo driver over I2C.
 
 ## Design decisions
 
@@ -40,10 +40,11 @@ flowchart LR
 |---|---|---|
 | Arm type | SCARA: two vertical-axis rotary joints plus a Z axis | Gravity does not load the planar joints, a chess board is a plane, and two-link inverse kinematics has a closed-form solution. Compact enough to sit beside a monitor. A gantry was rejected as bulky; an articulated arm because its shoulder carries the full arm weight. |
 | End effector | Parallel gripper, gripping the neck of standard Staunton pieces | Works with a real set. A magnet was rejected because standard piece tops are not uniform or flat. |
-| Servo driver | Adafruit PCA9685 Featherwing | Generates 16 channels of PWM in hardware, so the microcontroller is not tied up with timing. An FPGA would be overkill for four servos. |
+| Servo driver | Adafruit PCA9685 Featherwing | Generates the servo PWM in hardware (8 channels, 4 used), so the microcontroller is not tied up with timing. An FPGA would be overkill for four servos. |
+| Controller | Raspberry Pi Pico WH running MicroPython | Cheap, with WiFi built in, and the interactive prompt makes calibration quick. The Featherwing's headers do not allow stacking, so a Feather-shaped board has no advantage. |
 | Joint bearings | 3 inch square lazy-susan bearings at shoulder and elbow | Hobby servo shafts should not carry bending loads. The bearing carries the weight and the servo only rotates it. |
 | Power | One 5 V 6 A supply for the servos and the logic, with a 1000 µF capacitor on the servo rail | Cheapest single-supply option; both servo types are rated from 4.8 V and the bearings carry the arm's weight. |
-| Comms | WiFi from PC to ESP8266 | Only a power cable reaches the arm. |
+| Comms | WiFi from PC to the Pico W | Only a power cable reaches the arm. |
 | Vision | Occupancy diff, not piece classification | Far simpler and more robust. |
 | CAD | Parametric Fusion 360, every dimension derived from `board_size` | A different board only means changing one number. |
 
@@ -113,7 +114,7 @@ chess-robot-arm/
 ├── docs/               Design notes, bill of materials, build log, images
 ├── hardware/           CAD overview and exported models
 │   └── cad/
-├── firmware/           ESP8266 firmware (not started)
+├── firmware/           Pico firmware (not started)
 │   └── src/
 ├── software/           Vision, game logic and move planner (not started)
 ├── CHANGELOG.md        Automatic log of CAD exports, written by the Fusion-to-GitHub add-in

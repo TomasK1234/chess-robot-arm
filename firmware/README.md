@@ -1,6 +1,6 @@
 # Firmware
 
-Firmware for the ESP8266 that receives commands over WiFi and drives the servos through a PCA9685 over I2C.
+Firmware for the Raspberry Pi Pico W that receives commands over WiFi and drives the servos through a PCA9685 over I2C.
 
 **Status: not started.** This page describes the plan.
 
@@ -17,14 +17,17 @@ Firmware for the ESP8266 that receives commands over WiFi and drives the servos 
 
 | Signal | Connection |
 |---|---|
-| I2C (SDA, SCL) | ESP8266 to the PCA9685 |
+| I2C (SDA, SCL) | Pico to the PCA9685 Featherwing by jumper wires; expected address 0x45, to confirm with a scan |
 | Servo PWM | PCA9685 channels, one per servo |
 | Servo power | 5 V 6 A supply into the Featherwing's servo terminal, with a 1000 µF capacitor across it |
-| Logic power | Same 5 V supply into the Feather's USB pin, wired directly from the supply input |
+| Logic power | Featherwing servo terminal, through a diode, into the Pico's VSYS pin. The Pico's 3V3(OUT) pin powers the Featherwing's logic |
+| Ground | Pico GND to Featherwing GND |
+
+With only USB connected, the Pico and the PCA9685 chip are powered and the servos are not. This is the safe state for uploading code.
 
 ## Planned tooling
 
-- Arduino framework for the ESP8266
-- Adafruit's PCA9685 servo driver library
+- MicroPython on the Pico, chosen for its interactive prompt (REPL): servo positions can be typed in and tried immediately while calibrating
+- A small PCA9685 driver written over `machine.I2C`
 
 The command protocol will be documented here once it is designed.

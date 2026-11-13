@@ -62,7 +62,7 @@ Measure with calipers: servo body length (without tabs), tab-to-tab length, moun
 - The pedestal height now follows from the stack. The shoulder servo hangs under the top plate. The pedestal stands on the baseboard, which is `board_thickness` (24 mm) below the playing surface, so its real height to the servo body base is `pedestal_height_above_baseboard` (112.7 mm).
 - The lowest 24 mm of the pedestal sits beside the wooden board, so on the board side it must stay within `board_edge_clearance` (24.5 mm) of the shoulder axis.
 - On the board side, the structure stays within about 54 mm of the shoulder axis, so the gripper can reach the nearest squares.
-- An electronics bay in the base holds the ESP8266, the PCA9685, the barrel jack and the capacitor. Plan cable routes up the arm with slack loops at each joint.
+- An electronics bay in the base holds the Pico and the PCA9685 Featherwing side by side (they are joined by jumper wires, not stacked), the barrel jack and the capacitor. Neither board's mounting holes suit the M3/M4 kit (M2 for the Pico, M2.5 for the Featherwing), so plan printed clip-in posts. Plan cable routes up the arm with slack loops at each joint.
 - **Check:** fasteners can be reached with tools, and wires don't snag across the full joint ranges.
 
 ## Stage 7: motion check in CAD
